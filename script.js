@@ -1,12 +1,12 @@
 const mainWindow = document.getElementById('body');
 
-const loadBgiPage = () => {
-    const settings = {
-        delay: 1000,
-        firstBgi: 1,
-        lastBgi: 4
-    };
+const settings = {
+    delay: 1000,
+    firstBgi: 1,
+    lastBgi: 4
+};
 
+const loadBgiPage = () => {
     let date = +Date.now();
     let valueLastSession = checkLastSession();
     let numImg = +checkBgi();
@@ -19,15 +19,13 @@ const loadBgiPage = () => {
             localStorage.setItem('last_session', date);
             changeBgi(settings.firstBgi, settings.lastBgi)
         } else {
-            mainWindow.style.background = `url(img/${numImg}.jpg) no-repeat center center fixed`;
-            mainWindow.style.backgroundSize = `cover`;
+            applyBgi(numImg);
         }
 
     } else {
         localStorage.setItem('last_session', date)
     }
 };
-
 /////////////////////////////////
 const checkLastSession = () => {
     return localStorage.getItem('last_session')
@@ -35,10 +33,8 @@ const checkLastSession = () => {
 
 const changeBgi = (min, max) => {
     const numImg = randomNum(min, max);
-    mainWindow.style.background = `url(img/${numImg}.jpg)  no-repeat center center fixed`;
-    mainWindow.style.backgroundSize = `cover`;
+    applyBgi(numImg);
     localStorage.setItem('bgi', numImg);
-    console.log(`change ${numImg}`);
 };
 
 const checkBgi = () => {
@@ -46,16 +42,18 @@ const checkBgi = () => {
     let numImg = localStorage.getItem('bgi');
 
     if (numImg) {
-        mainWindow.style.background = `url(img/${numImg}.jpg)  no-repeat center center fixed`;
-        mainWindow.style.backgroundSize = `cover`;
+        applyBgi(numImg);
         check = numImg
     } else {
         localStorage.setItem('bgi', "4");
-        mainWindow.style.background = 'url(img/4.jpg)  no-repeat center center fixed';
-        mainWindow.style.backgroundSize = `cover`;
-        check = false
+        applyBgi(settings.lastBgi);
     }
     return check
+};
+
+const applyBgi = (numImg) => {
+    mainWindow.style.background = `url(img/${numImg}.jpg) no-repeat center center fixed`;
+    mainWindow.style.backgroundSize = `cover`;
 };
 
 const randomNum = (min, max) => {
@@ -66,4 +64,4 @@ const randomNum = (min, max) => {
 };
 
 //////////////////////////////////
-loadBgiPage();
+document.addEventListener("DOMContentLoaded", loadBgiPage);
