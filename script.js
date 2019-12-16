@@ -1,18 +1,23 @@
 const mainWindow = document.getElementById('body');
 
-const setData = () => {
-    const periodChange = 5000;
+const loadBgiPage = () => {
+    const settings = {
+        delay: 1000,
+        firstBgi: 1,
+        lastBgi: 4
+    };
+
     let date = +Date.now();
     let valueLastSession = checkLastSession();
     let numImg = +checkBgi();
 
     if (valueLastSession) {
         const checkValueTime = date - valueLastSession;
-        const status = checkValueTime > periodChange;
+        const status = checkValueTime > settings.delay;
 
         if (status) {
             localStorage.setItem('last_session', date);
-            changeBgi(1, 4)
+            changeBgi(settings.firstBgi, settings.lastBgi)
         } else {
             mainWindow.style.background = `url(img/${numImg}.jpg) no-repeat center center fixed`;
             mainWindow.style.backgroundSize = `cover`;
@@ -61,4 +66,4 @@ const randomNum = (min, max) => {
 };
 
 //////////////////////////////////
-setData();
+loadBgiPage();
