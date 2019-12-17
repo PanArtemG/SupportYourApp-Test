@@ -45,8 +45,8 @@ const checkBgi = () => {
         applyBgi(numImg);
         check = numImg
     } else {
-        localStorage.setItem('bgi', "4");
-        applyBgi(settings.lastBgi);
+        localStorage.setItem('bgi', "1");
+        applyBgi(settings.firstBgi);
     }
     return check
 };
