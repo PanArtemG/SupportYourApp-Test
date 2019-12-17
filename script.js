@@ -1,7 +1,7 @@
 const mainWindow = document.getElementById('body');
 
 const settings = {
-    delay: 1000,
+    delayMs: 28800000,
     firstBgi: 1,
     lastBgi: 4
 };
@@ -13,7 +13,7 @@ const loadBgiPage = () => {
 
     if (valueLastSession) {
         const checkValueTime = date - valueLastSession;
-        const status = checkValueTime > settings.delay;
+        const status = checkValueTime > settings.delayMs;
 
         if (status) {
             localStorage.setItem('last_session', date);
